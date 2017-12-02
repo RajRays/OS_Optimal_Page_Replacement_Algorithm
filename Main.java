@@ -1,5 +1,7 @@
 package com.bhagroo.rajendra.opr;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 /**
@@ -25,10 +27,7 @@ public class Main {
         OptimalAlgorithm.simulate();
     }
 
-
-
 }//END Main Class
-
 
 
 
@@ -36,13 +35,16 @@ public class Main {
 
 class OptimalPage {
 
+    private Queue<Integer> refStringQueue = new LinkedList<Integer>();;
     private Scanner keyboard = new Scanner(System.in);
     private String refString;
     private int frames;
 
 
+
+
     //Ensures Input Is Numerical
-    String numericStringValidation(String msg){
+    private String numericStringValidation(String msg){
 
         boolean isInvalid = true;
         String tempString = null;
@@ -52,22 +54,33 @@ class OptimalPage {
             tempString = keyboard.next();
 
             if(!tempString.matches("[0-9]+")) {
-
                 System.out.println("Please Enter A Numerical " + msg);
                 continue;
-
             } else {
-
                 break;
-
             }
 
         } //END WHILE
 
         return tempString;
+
     }
 
 
+
+
+    private Queue<Integer> populateQueue(String targetString){
+
+        String[] tempArray = targetString.split("");
+        Queue<Integer> tempQueue = new LinkedList<Integer>();;
+
+        for(int i = 0; i < targetString.length(); i++){
+            tempQueue.add(Integer.parseInt(tempArray[i]));
+        }
+
+        return tempQueue;
+
+    }
 
 
 
@@ -79,8 +92,8 @@ class OptimalPage {
         //dataValidation Ensures Positive Integer
         refString = numericStringValidation("String");
 
-        //SPLIT STRING TO GET TOKENS, SAVE IN ARRAY
-
+        //Populates refStringQueue Class Variable
+        refStringQueue = populateQueue(refString);
 
 
 
@@ -94,24 +107,10 @@ class OptimalPage {
 
 
 
-
-
-
-
-
-
-
-
-
-    String displayStack(){
+    private String displayStack(){
         //Displays Index's of Stack based off # of frames
         return "";
     }
-
-
-
-
-
 
 
 
@@ -123,9 +122,8 @@ class OptimalPage {
 
         //Some Sort Of Loop
         System.out.println();
+
     }
-
-
 
 
 
