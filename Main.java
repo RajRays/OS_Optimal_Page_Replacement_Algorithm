@@ -1,7 +1,6 @@
 package com.bhagroo.rajendra.opr;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -35,10 +34,13 @@ public class Main {
 
 class OptimalPage {
 
-    private Queue<Integer> refStringQueue = new LinkedList<Integer>();;
+
+    private ArrayList<Integer> refArrayList = new ArrayList<Integer>();
     private Scanner keyboard = new Scanner(System.in);
+    private String[] memArray;
     private String refString;
-    private int frames;
+    private int pageFaults;
+    private int frameSize;
 
 
 
@@ -69,16 +71,31 @@ class OptimalPage {
 
 
 
-    private Queue<Integer> populateQueue(String targetString){
+    private ArrayList<Integer> populateArrayList(String targetString){
 
         String[] tempArray = targetString.split("");
-        Queue<Integer> tempQueue = new LinkedList<Integer>();;
+        ArrayList<Integer> tempArrayList = new ArrayList<Integer>();
 
-        for(int i = 0; i < targetString.length(); i++){
-            tempQueue.add(Integer.parseInt(tempArray[i]));
+        for(int i = 0; i < tempArray.length; i++){
+            tempArrayList.add(Integer.parseInt(tempArray[i]));
         }
 
-        return tempQueue;
+        return tempArrayList;
+
+    }
+
+
+
+
+    private String[] populateArray(int targetFrameSize){
+
+        String[] tempArray = new String[targetFrameSize];
+
+        for(int i = 0; i < tempArray.length ; i++){
+            tempArray[i] = "*";
+        }
+
+        return tempArray;
 
     }
 
@@ -92,24 +109,66 @@ class OptimalPage {
         //dataValidation Ensures Positive Integer
         refString = numericStringValidation("String");
 
-        //Populates refStringQueue Class Variable
-        refStringQueue = populateQueue(refString);
+        //Populates refArrayList Class Variable
+        refArrayList = populateArrayList(refString);
 
 
 
         System.out.println("\nEnter The # Of Frames");
 
         //dataValidation Ensures Integer.parseInt() Will Not Throw An Exception
-        frames = Integer.parseInt(numericStringValidation("Frame"));
+        frameSize = Integer.parseInt(numericStringValidation("Frame"));
+        memArray = populateArray(frameSize);
 
     }
 
 
 
 
-    private String displayStack(){
-        //Displays Index's of Stack based off # of frames
-        return "";
+    private String displayArray(String[] targetArray, int targetFrames){
+
+        String tempString = "";
+
+        for(int i = 0; i < targetFrames; i++){
+            tempString += targetArray[i];
+        }
+
+        return tempString;
+    }
+
+
+//Almost Done, Fix Paramters and Javadoc Annotations
+
+    private void mutateArray(String[] targetArray, ArrayList<Integer> targetArrayList, int currentCount){
+
+        if(currentCount < memArray.length){
+
+            targetArray[currentCount] = targetArrayList.get(currentCount).toString();
+
+            pageFaults++;
+
+            System.out.println(refArrayList.get(currentCount)
+                    + ": Memory is: "
+                    + displayArray(memArray, frameSize)
+                    + ": Page Fault: "
+                    + " (Number of Page Faults: "
+                    + pageFaults);
+
+            currentCount++;
+
+        } else {
+
+            System.out.println(refArrayList.get(currentCount)
+                    + ": Memory is: "
+                    + displayArray(memArray, frameSize)
+                    + ": Hit: \t\t"
+                    + "(Number of Page Faults: "
+                    + pageFaults);
+
+            currentCount++;
+
+        }
+
     }
 
 
@@ -118,10 +177,13 @@ class OptimalPage {
     void simulate(){
 
         System.out.println("\n\nRunning Simulation: \n");
-        System.out.println("Start: Memory is: " + displayStack() );
+        System.out.println("Start: Memory is: " + displayArray(memArray,frameSize));
 
-        //Some Sort Of Loop
-        System.out.println();
+        for(int i = 0; i < refArrayList.size(); i++){
+
+            mutateArray(memArray, refArrayList, i);
+
+        }
 
     }
 
@@ -146,3 +208,5 @@ class OptimalPage {
 
 //VARIABLES
 /** Description of variables */
+
+// Reference String = 70120304230321201701
