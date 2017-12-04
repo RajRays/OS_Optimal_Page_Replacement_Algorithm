@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"com.bhagroo.rajendra.opr","l":"Main"},{"p":"com.bhagroo.rajendra.opr","l":"OptimalPage"}]
