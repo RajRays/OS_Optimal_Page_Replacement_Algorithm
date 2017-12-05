@@ -5,17 +5,17 @@ import java.util.Scanner;
 
 /**
  * <h1>Optimal Page Replacement Algorithm Implementation</h1>
- * The Raj_OS_Optimal_Page_Replacement program implements the optimal
- * page replacement algorithm on a reference string to simulate page
- * replacement within operating systems.
+ * The Raj_OS_Optimal_Page_Replacement Program Implements The Optimal
+ * Page Replacement Algorithm On A Reference String To Simulate Page
+ * Replacement Within Operating Systems.
  * <p>
  * <b>Sample Reference String : 70120304230321201701</b>
  *
- * @author Rajendra Bhagroo
+ * @author  Rajendra Bhagroo
  * @version 9.0
- * @see Main
- * @see OptimalPage
- * @since 2017-12-2
+ * @see     Main
+ * @see     OptimalPage
+ * @since   2017-12-2
  */
 public class Main {
 
@@ -36,23 +36,34 @@ public class Main {
  */
 class OptimalPage {
 
-    /** Used To Store Numerical Values From "refString" */
+    /**
+     * Used To Store Numerical Values From "refString"
+     */
     private ArrayList<Integer> refArrayList = new ArrayList<Integer>();
 
-    /** Used To Obtain Input From User */
+    /**
+     * Used To Obtain Input From User
+     */
     private Scanner keyboard = new Scanner(System.in);
 
-    /** Used To Emulate Memory Using "frameSize" */
+    /**
+     * Used To Emulate Memory Using "frameSize"
+     */
     private String[] memArray;
 
-    /** Used As Raw Input Of Reference String From User */
+    /**
+     * Used As Raw Input Of Reference String From User
+     */
     private String refString;
 
-    /** Used To Track Number Of Page Faults*/
-
+    /**
+     * Used To Track Number Of Page Faults
+     */
     private int pageFaults;
 
-    /** Used As Raw Input Of Frame Size From User*/
+    /**
+     * Used As Raw Input Of Frame Size From User
+     */
     private int frameSize;
 
 
@@ -86,6 +97,7 @@ class OptimalPage {
 
     }
 
+
     /**
      * Takes "refString" Entered By User,
      * Creates New ArrayList Of Type Integer,
@@ -111,10 +123,10 @@ class OptimalPage {
 
     /**
      * Takes "frameSize" Entered By User And Fills
-     * Every Index Of "tempArray" with Asterisks
+     * Every Index Of "tempArray" With Asterisks
      *
-     * @param targetFrameSize "frameSize" Entered By User
-     * @return                Copies Contents Into "memArray"
+     * @param  targetFrameSize "frameSize" Entered By User
+     * @return tempArray        Copies Contents Into "memArray"
      */
     private String[] populateArray(int targetFrameSize) {
 
@@ -130,7 +142,7 @@ class OptimalPage {
 
 
     /**
-     * ONLY METHOD To Ask/Recieve USER INPUT
+     * ONLY METHOD To Ask/Receive USER INPUT
      * <p>
      * Initializes Class Variables...
      * <p>
@@ -158,17 +170,18 @@ class OptimalPage {
 
         System.out.println("Enter A Numerical Reference String");
 
-        //dataValidation Ensures Positive Integer
+        //numericStringValidation() Ensures Positive Integer
         refString = numericStringValidation("String");
 
-        //Populates refArrayList Class Variable
+        //Populates "refArrayList" Class Variable
         refArrayList = populateArrayList(refString);
 
 
         System.out.println("\nEnter The # Of Frames");
 
-        //dataValidation Ensures Integer.parseInt() Will Not Throw An Exception
+        //numericStringValidation() Ensures Integer.parseInt() Will Not Throw An Exception
         frameSize = Integer.parseInt(numericStringValidation("Frame"));
+
         memArray = populateArray(frameSize);
 
         keyboard.close();
@@ -243,13 +256,13 @@ class OptimalPage {
      */
     private void fault(String[] targetArray, ArrayList<Integer> targetArrayList, int currentCount) {
 
-        //Current value in array must be a numerical value
+        //Current Value In Array Must Be A Numerical Value
         if (!targetArray[currentCount % frameSize].matches("[0-9]")) {
 
             targetArray[currentCount % frameSize] = targetArrayList.get(currentCount).toString();
 
         } else {
-            //Run algorithm to manipulate array index to replace with largest traversal
+            //Run Algorithm To Manipulate Array Index To Replace With Largest Traversal
 
             String currentVal = targetArrayList.get(currentCount).toString();
 
@@ -313,7 +326,7 @@ class OptimalPage {
 
         if (!currentRefEquals(targetArrayList, targetArray, currentCount)) {
 
-            //Current index in refArrayList != Any # in Array
+            //Current Index In "refArrayList" != Any # In "memArray"
             fault(memArray, refArrayList, currentCount);
 
             pageFaults++;
@@ -330,7 +343,7 @@ class OptimalPage {
 
         } else {
 
-            //Current index in refArrayList == Any # in Array
+            //Current Index In "refArrayList" == Any # In "memArray"
             System.out.println(targetArrayList.get(currentCount)
                     + ": Memory is: "
                     + displayArray(memArray, frameSize)
@@ -344,6 +357,7 @@ class OptimalPage {
         }
 
     }
+
 
     /**
      * Traverses "refArrayList" And Notifies Users Of Page Fault or Hit For Each Element
