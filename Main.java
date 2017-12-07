@@ -270,26 +270,21 @@ class OptimalPage {
             int traversals = 0;
 
             //Cycles Through Each Element Of "memArray"
-            for (int i = 0 ; i < frameSize; i++)
-            {
+            for (int i = 0 ; i < frameSize; i++) {
 
                 //Counts Number Of Traversals For Each Element In "refArrayList"
-                for (int cc=currentCount; cc < targetArrayList.size(); cc++)
-                {
+                for (int cc=currentCount; cc < targetArrayList.size(); cc++) {
 
-                    if (!targetArrayList.get(cc).toString().equals(targetArray[i]))
-                    {
+                    if (!targetArrayList.get(cc).toString().equals(targetArray[i])) {
                         traversals++;
                     }
-                    else
-                    {
+                    else {
                         break;
                     }
 
                 }//END INNER FOR LOOP [Traversal Of "refArrayList"]
 
-                if (traversals > largestTraversal)
-                {
+                if (traversals > largestTraversal) {
                     largestTraversal = traversals;
                     indexOfLargest = i;
                 }
