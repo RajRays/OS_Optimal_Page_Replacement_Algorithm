@@ -256,48 +256,47 @@ class OptimalPage {
      */
     private void fault(String[] targetArray, ArrayList<Integer> targetArrayList, int currentCount) {
 
-        //Current Value In Array Must Be A Numerical Value
+        //If Current Value In "memArray" Is Not Numerical Value, Replace With Current Value in "refArrayList"
         if (!targetArray[currentCount % frameSize].matches("[0-9]")) {
 
             targetArray[currentCount % frameSize] = targetArrayList.get(currentCount).toString();
 
         } else {
-            //Run Algorithm To Manipulate Array Index To Replace With Largest Traversal
+        //Run Algorithm To Replace "memArray" Index With Largest Traversal [Optimal Page Algorithm]
 
             String currentVal = targetArrayList.get(currentCount).toString();
-
-            int traversals = 0;
-            int length = 0;
-            int largestTraversal = -1;
+            int largestTraversal = 0;
             int indexOfLargest = 0;
-            int oldCount = currentCount;
+            int traversals = 0;
 
             //Cycles Through Each Element Of "memArray"
-            while (length < frameSize) {
+            for (int i = 0 ; i < frameSize; i++)
+            {
 
                 //Counts Number Of Traversals For Each Element In "refArrayList"
-                for (; currentCount < targetArrayList.size(); currentCount++) {
+                for (int cc=currentCount; cc < targetArrayList.size(); cc++)
+                {
 
-                    if (!targetArrayList.get(currentCount).toString().equals(targetArray[length])) {
+                    if (!targetArrayList.get(cc).toString().equals(targetArray[i]))
+                    {
                         traversals++;
-                    } else {
-
-                        if (largestTraversal < traversals) {
-                            largestTraversal = traversals;
-                            indexOfLargest = length;
-                        }
-
-                        continue;
-
+                    }
+                    else
+                    {
+                        break;
                     }
 
-                }//END FOR LOOP
+                }//END INNER FOR LOOP [Traversal Of "refArrayList"]
 
-                length++;
-                currentCount = oldCount;
+                if (traversals > largestTraversal)
+                {
+                    largestTraversal = traversals;
+                    indexOfLargest = i;
+                }
+
                 traversals = 0;
 
-            }//END WHILE LOOP
+            }//END OUTER FOR LOOP [Traversal of "memArray"]
 
             //Changes Index Of "memArray" With Largest Traversal [Value That Is Not Seen For Longest Time]
             targetArray[indexOfLargest] = currentVal;
@@ -379,6 +378,5 @@ class OptimalPage {
         System.out.println("Total Number Of Page Faults: " + pageFaults);
 
     }
-
 
 }//END OptimalPage Class
